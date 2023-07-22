@@ -1,0 +1,62 @@
+/* hello my friends this is  login page css file and it contain the style on login page*/
+
+.box {
+    font-family: 'Roboto', sans-serif;
+    background-color: #9ff1ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.box {
+    width: 212px;
+    padding: 40px;
+    position: absolute;
+    margin: 65px;
+    background: #011217;
+    box-shadow: 0px 0px 45px rgba(190, 241, 87, 0.814);
+    text-align: center;
+    border-radius: 40px;
+}
+
+.box input[type="text"],
+.box input[type="password"] {
+    width: 150px;
+    text-align: center;
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+    outline: none;
+    color: white;
+    border: 2px solid #1595eb;
+    background: none;
+    border-radius: 30px;
+    transition: 0.6s;
+}
+
+h1 {
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.box input[type="submit"] {
+    width: 95px;
+    text-align: center;
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+    outline: none;
+    color: white;
+    border: 2px solid #2ecc71;
+    background: none;
+    border-radius: 30px;
+    transition: 0.4s;
+}
+
+.box input[type="submit"]:hover {
+    background: #2ecc71;
+}
