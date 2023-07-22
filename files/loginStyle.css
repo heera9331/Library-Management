@@ -1,6 +1,4 @@
-/* hello my friends this is  login page css file and it contain the style on login page*/
-
-.box {
+body {
     font-family: 'Roboto', sans-serif;
     background-color: #9ff1ff;
     display: flex;
@@ -17,7 +15,7 @@
     position: absolute;
     margin: 65px;
     background: #011217;
-    box-shadow: 0px 0px 45px rgba(43, 36, 245, 0.814);
+    box-shadow: 0px 0px 45px rgba(190, 241, 87, 0.814);
     text-align: center;
     border-radius: 40px;
 }
