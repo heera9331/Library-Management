@@ -15,6 +15,7 @@ app.use(cors());
 
 // operations on books 
 
+ 
 app.post('/book/add-book', async (req, res) => {
     console.log(req.body);
 
@@ -95,6 +96,7 @@ app.post('/book/get-books', async (req, res) => {
     console.log(req.body);
 
     await Book.find({}).then((result) => {
+        console.log(result);
         res.json({ success: true, msg: "found books here", result: result });
     }).catch((err) => {
         res.json(err);
@@ -108,6 +110,7 @@ app.get('/book/get-book', async (req, res) => {
     const bookId = req.body.bookId;
 
     await Book.findOne({ bookId: bookId }).then((result) => {
+        console.log(result);
         res.json({ success: true, msg: "found a book", result: result });
     }).catch((err) => {
         res.json({ success: false, msg: "Book not found" })
@@ -120,6 +123,7 @@ app.get('/book/get-book', async (req, res) => {
 app.post('/admin/get-students', async (req, res) => {
     console.log(req.body);
     await Student.find({}).then((result) => {
+        console.log(result);
         res.json({ success: true, msg: "student found", result: result });
     }).catch((err) => {
         res.jons({ success: false, msg: "failed to get students", result: err });
@@ -200,16 +204,7 @@ app.delete('/admin/remove-card', async (req, res) => {
 
 
 
-app.get('/', async (req, res) => {
-
-    // let newStudent = new Student({
-    //     name : "Kamlesh",
-    //     enrollno: "0610CS201060",
-    //     password: "1234",
-    // })
-
-    // console.log(await newStudent.save());
-
+app.get('/', async (req, res) => { 
     res.json({ success: true, msg: "Reply from server" });
 });
 
@@ -218,21 +213,26 @@ app.post('/login', async (req, res) => {
 
     console.log(req.body);
     const type = req.body.type;
-
-    if (type === 'student') {
-        const enrollno = req.body.enrollno;
-        const password = req.body.password;
-
-        const user = await Student.findOne({ enrollno: enrollno, password: password }).select("-password");
-        res.json({ success: true, msg: "found one user", user: user });
+    const password = req.body.password;
+    const username = req.body.username;
+    
+    if (type === 'student') { 
+        let test = await Student.find({});
+        console.log(test);
+        const user = await Student.findOne({ enrollno: username, password: password}).select("-password")
+        console.log(user);
+        if(user) {
+            res.json({ success: true, msg: "found one user", user: user }); 
+        } else { 
+            res.json({ success: false, msg: "user not found" });
+        }
     }
 
-    else if (type === 'admin') {
-        const email = req.body.email;
-        const password = req.body.password;
-        const admin = await Admin.findOne({ email: email, password: password }).select("-password");
+    else if (type === 'admin') { 
+        const admin = await Admin.findOne({ email: username, password: password }).select("-password");
+        
         if (admin) {
-            let books = await getAllBooks();
+            let books = await Book.find({});
             console.log(books);
             res.json({ success: true, msg: "found one user", user: admin, books: books });
         }
@@ -241,7 +241,7 @@ app.post('/login', async (req, res) => {
         }
     }
     else {
-        res.json({ success: true, msg: "user type not specified" });
+        res.json({ success: false, msg: "user type not specified" });
     }
 });
 

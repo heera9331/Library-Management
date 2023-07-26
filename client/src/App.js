@@ -6,28 +6,47 @@ import { useState } from 'react';
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  
-  function handleLogin() {
-    console.log(username, password);
+  const [type, setType] = useState("student");
 
-    fetch("http://localhost:3001", {
+  function handleLogin() { 
+    const user = {type: type, username: username, password: password};
+    console.log(user);
+    fetch("http://localhost:3001/login", {
       method: "POST",
-      headers : {
+      headers: {
         "content-type": "application/json"
       },
-      body: JSON.stringify({username, password})
+      body: JSON.stringify(user)
     })
-    .then((result) => {
-      console.log(result);
-    })
-    .catch((err)=>{
-      console.log(err);
-    })
+      .then(async (result) => {
+        console.log(await result.json());
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   return (
     <div className='form'>
-      <input type="text"
+      <select name="type" id="type" placeholder='User Type' defaultValue={"student"} onChange={(e)=>{setType(e.target.value);}}>
+        <option value="student">User Type</option>
+        <option
+          value="student"
+          onChange={(e) => {  
+            setType(e.target.value)
+          }}>
+          Student
+        </option>
+        <option
+          value="admin"
+          onChange={(e) => { 
+            setType(e.target.value)
+          }}>
+          Admin
+        </option>
+      </select>
+      <input
+        type="text"
         name="username"
         id="username"
         placeholder="Enter Username"
@@ -64,7 +83,7 @@ function Login() {
 function App() {
   return (
     <>
-      <h1>Heading</h1>
+      <h1>Login</h1>
       <Login />
     </>
   );
