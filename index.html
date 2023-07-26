@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    #table,
+    table {
+      background-color: rgb(217, 217, 217);
+      margin: 2rem auto;
+      width: 80%;
+      padding: 2rem;
+      border-radius: 5px;
+    }
+
+
+
+    #table table {
+      border-collapse: collapse;
+    }
+
+    table tr td {
+      padding: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>API JS</h1>
+
+  <div id="table">
+    <table border="1">
+      <tr>
+        <td>User Id</td>
+        <td>Title</td>
+        <td>Completed</td>
+      </tr>
+
+    </table>
+  </div>
+  <script>
+
+    async function fetchData() {
+      fetch("https://jsonplaceholder.typicode.com/todos")
+        .then(async function (value) {
+          let table = document.getElementById("table").children[0];
+
+          await value.json().then(function (data) {
+            data.forEach(task => {
+              table.innerHTML += `<tr>
+                <td>${task.userId}</td>
+                <td>${task.title}</td>
+                <td>${task.completed}</td>
+              </tr>`
+            });
+          }).catch(function (err) {
+            console.log(err);
+          })
+        }).catch(function (reason) {
+          console.log(reason);
+        })
+    }
+
+    fetchData();
+  </script>
+</body>
+
+</html>
