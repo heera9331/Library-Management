@@ -1,5 +1,6 @@
 import express from "express";
-import bodyParser from "body-parser"; "body-parser";
+import bodyParser from "body-parser";
+"body-parser";
 import connectDB from "./config/connection.js";
 
 import Admin from "./models/Admin.js";
@@ -15,7 +16,7 @@ app.use(bodyParser.json({ extended: true }));
 
 // operations on books 
 
-app.post('/book/add-book', async (req, res) => {
+app.post('/book/add-book', async(req, res) => {
     console.log(req.body);
 
     const bookId = req.body.bookId;
@@ -24,7 +25,10 @@ app.post('/book/add-book', async (req, res) => {
     const author = req.body.author;
 
     await Book.insertMany([{
-        bookId: bookId, name: name, category: category, author: author
+        bookId: bookId,
+        name: name,
+        category: category,
+        author: author
     }]).then((result) => {
         res.json({ success: true, msg: "inserted successfull", result: result })
     }).catch((err) => {
@@ -33,7 +37,7 @@ app.post('/book/add-book', async (req, res) => {
 })
 
 // search api, search books through user query, book id, book name, category, author
-app.get('/book/search', async (req, res) => {
+app.get('/book/search', async(req, res) => {
     console.log(req.body);
 
     const query = req.body.query;
@@ -53,7 +57,7 @@ app.get('/book/search', async (req, res) => {
 })
 
 // update book details using book id
-app.put('/book/update', async (req, res) => {
+app.put('/book/update', async(req, res) => {
     console.log(req.body);
 
     const bookId = req.body.bookId;
@@ -63,8 +67,8 @@ app.put('/book/update', async (req, res) => {
 
     if (await Book.findOne({ bookId: bookId })) {
         await Book.updateOne({ bookId: bookId }, { name, author, category }).then((result) => {
-            res.json({ success: true, msg: "Updated", result: result })
-        })
+                res.json({ success: true, msg: "Updated", result: result })
+            })
             .catch((err) => {
                 res.json({ success: false, msg: "Error occured", result: err })
             })
@@ -75,7 +79,7 @@ app.put('/book/update', async (req, res) => {
 })
 
 // delete book using book id
-app.delete('/book/delete', async (req, res) => {
+app.delete('/book/delete', async(req, res) => {
     console.log(req.body);
 
     const bookId = req.body.bookId;
@@ -91,7 +95,7 @@ app.delete('/book/delete', async (req, res) => {
 })
 
 // get all books
-app.post('/book/get-books', async (req, res) => {
+app.post('/book/get-books', async(req, res) => {
     console.log(req.body);
 
     await Book.find({}).then((result) => {
@@ -102,7 +106,7 @@ app.post('/book/get-books', async (req, res) => {
 });
 
 // get single book by book id
-app.get('/book/get-book', async (req, res) => {
+app.get('/book/get-book', async(req, res) => {
     console.log(req.body);
 
     const bookId = req.body.bookId;
@@ -117,7 +121,7 @@ app.get('/book/get-book', async (req, res) => {
 // operations on student by admin
 
 // get all student
-app.post('/admin/get-students', async (req, res) => {
+app.post('/admin/get-students', async(req, res) => {
     console.log(req.body);
     await Student.find({}).then((result) => {
         res.json({ success: true, msg: "student found", result: result });
@@ -127,19 +131,19 @@ app.post('/admin/get-students', async (req, res) => {
 })
 
 // get single student using student enrollnoment
-app.post('/admin/get-student', async (req, res) => {
+app.post('/admin/get-student', async(req, res) => {
     console.log(req.body);
 
     const enrollno = req.body.enrollno;
 
-    await Student.findOne({enrollno: enrollno}).then((result)=>{ 
-        res.json({success: true, msg: "we got a student", result: result})
-    }).catch((err)=>{
-        res.json({success: false, msg: "error occured", result: err});
+    await Student.findOne({ enrollno: enrollno }).then((result) => {
+        res.json({ success: true, msg: "we got a student", result: result })
+    }).catch((err) => {
+        res.json({ success: false, msg: "error occured", result: err });
     })
 })
 
-app.post('/admin/add-student', async (req, res) => {
+app.post('/admin/add-student', async(req, res) => {
     console.log(req.body);
     const name = req.body.name;
     const enrollno = req.body.enrollno;
@@ -155,7 +159,7 @@ app.post('/admin/add-student', async (req, res) => {
 // card operations
 
 // generate new card
-app.post('/admin/generate-card', async (req, res) => {
+app.post('/admin/generate-card', async(req, res) => {
     console.log(req.body);
 
     let cardNo = req.body.cardNo;
@@ -163,12 +167,12 @@ app.post('/admin/generate-card', async (req, res) => {
 
     let date = new Date().toLocaleDateString();
 
-    await Student.updateOne({enrollno: enrollno}, {card: true}).then((result)=>{
+    await Student.updateOne({ enrollno: enrollno }, { card: true }).then((result) => {
         console.log(result);
-    }).catch((err)=>{
+    }).catch((err) => {
         console.log(err);
     })
-    await Card.insertMany([{ cardNo: cardNo, enrollno: enrollno, date: date }]).then((result) => { 
+    await Card.insertMany([{ cardNo: cardNo, enrollno: enrollno, date: date }]).then((result) => {
         res.json({ success: true, msg: "card is created", newCard: result })
     }).catch((err) => {
 
@@ -177,14 +181,14 @@ app.post('/admin/generate-card', async (req, res) => {
 })
 
 // discard library card- card number or enrollment no
-app.delete('/admin/remove-card', async (req, res) => {
+app.delete('/admin/remove-card', async(req, res) => {
     console.log(req.body);
     let cardNo = req.body.cardNo;
     if (await Card.findOne({ cardNo: cardNo })) {
-        await Card.findOne({ cardNo: cardNo }).then((result)=>{
+        await Card.findOne({ cardNo: cardNo }).then((result) => {
             const enrollno = result.enrollno;
-            Student.updateOne({enrollno: enrollno}, {card: false});
-        }).catch((err)=>{
+            Student.updateOne({ enrollno: enrollno }, { card: false });
+        }).catch((err) => {
             console.log(err);
         })
         await Card.deleteOne({ cardNo: cardNo }).then((result) => {
@@ -200,7 +204,7 @@ app.delete('/admin/remove-card', async (req, res) => {
 
 
 
-app.get('/', async (req, res) => {
+app.get('/', async(req, res) => {
 
     // let newStudent = new Student({
     //     name : "Kamlesh",
@@ -213,7 +217,7 @@ app.get('/', async (req, res) => {
     res.json({ success: true, msg: "Reply from server" });
 });
 
-app.post('/login', async (req, res) => {
+app.post('/login', async(req, res) => {
 
 
     console.log(req.body);
@@ -225,9 +229,7 @@ app.post('/login', async (req, res) => {
 
         const user = await Student.findOne({ enrollno: enrollno, password: password }).select("-password");
         res.json({ success: true, msg: "found one user", user: user });
-    }
-
-    else if (type === 'admin') {
+    } else if (type === 'admin') {
         const email = req.body.email;
         const password = req.body.password;
         const admin = await Admin.findOne({ email: email, password: password }).select("-password");
@@ -235,17 +237,15 @@ app.post('/login', async (req, res) => {
             let books = await getAllBooks();
             console.log(books);
             res.json({ success: true, msg: "found one user", user: admin, books: books });
-        }
-        else {
+        } else {
             res.json({ success: true, msg: "Admin not found" });
         }
-    }
-    else {
+    } else {
         res.json({ success: true, msg: "user type not specified" });
     }
 });
 
-app.post('/register', async (req, res) => {
+app.post('/register', async(req, res) => {
     const admin = req.body;
 
     if ((req.body)) {
@@ -260,8 +260,8 @@ app.post('/register', async (req, res) => {
         }
 
         await Admin.insertMany({ name: name, email: email, password: password }).then((success) => {
-            res.json({ success: true, msg: success })
-        })
+                res.json({ success: true, msg: success })
+            })
             .catch((err) => {
                 res.json({ success: false, msg: err });
             })
