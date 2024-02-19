@@ -32,21 +32,23 @@ function Login() {
   }
   return (
     <>
-      <h1>heading</h1>
-      <div className='form'>
-        <input type='text' name='username' id='username' placeholder='username'
+     
+      <div className='container'>
+       <div className='form'>
+       <div class="heading">Login</div>
+        <input type='text'  class="input" name='username' id='username' placeholder='username'
           onChange={(e) => {
             setUsername(e.target.value)
           }}
         />
-        <input type='text' name='username' id='password' placeholder='username'
+        <input type='text'  class="input" name='username' id='password' placeholder='username'
           onChange={(e) => {
             setPassword(e.target.value)
           }} />
         <button onClick={() => {
           handleLogin()
         }}>login</button>
-
+</div>
 
       </div>
 
